@@ -7,4 +7,6 @@
 
 ## User Interface
 
-<img src="Weather Detail.png" height="500"></img><br>
+<img src="Weather Detail.png" height="500"></img>
+<img src="Location.png" height="500"></img>
+<img src="Settings.png" height="500"></img>
