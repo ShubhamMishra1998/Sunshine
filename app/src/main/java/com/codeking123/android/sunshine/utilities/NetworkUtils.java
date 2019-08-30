@@ -3,6 +3,8 @@ package com.codeking123.android.sunshine.utilities;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.codeking123.android.sunshine.data.SunshinePreferences;
@@ -13,6 +15,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public final class NetworkUtils {
@@ -99,23 +105,21 @@ public final class NetworkUtils {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-        try {
-            InputStream in = urlConnection.getInputStream();
 
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
+        OkHttpClient client=new OkHttpClient();
+        String Jsonresponse = null;
+        String Url=url.toString();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
 
-            boolean hasInput = scanner.hasNext();
-            String response = null;
-            if (hasInput) {
-                response = scanner.next();
-            }
-            scanner.close();
-            return response;
-        } finally {
-            urlConnection.disconnect();
+        try (Response response = client.newCall(request).execute()) {
+            Jsonresponse = response.body().string();
         }
+         return Jsonresponse;
+
+
     }
 }
