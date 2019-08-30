@@ -6,3 +6,5 @@
 * You can set the location according to your choise
 
 ## User Interface
+
+<img src="Weather Detail.png" height="500"></img><br>
